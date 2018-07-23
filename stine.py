@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 import os
 import urllib.request
 import time
+import notification as notify
 
 def readAccountData():
 	f = open("name.stine", "r")
@@ -17,13 +18,15 @@ def readAccountData():
 def deuglyfy(string):
 	index = string.find("<br>")
 	string = string[:index]
-	modulname = string.strip().replace("&nbsp;", "").replace("\t", "").replace("\n", "")
+	modulname = string.strip().replace("&nbsp;", "").replace("\t", "")
+	modulname = modulname.replace("\n", "").replace("  ","")
 	return modulname
 
 def handleChange(entry):
 	content = entry.find_element_by_tag_name('td').get_attribute('innerHTML')
 	modulname = deuglyfy(content)
-	print(modulname)
+	message = modulname +" ist jetzt online!"
+	notify.sendMessage(message)
 
 entrynumber = -1
 account = readAccountData()
