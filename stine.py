@@ -31,7 +31,7 @@ def handleChange(entry):
 entrynumber = -1
 account = readAccountData()
 options = Options()
-#options.add_argument("--headless")
+options.add_argument("--headless")
 driver = webdriver.Chrome(chrome_options=options)
 driver.get("https://www.stine.uni-hamburg.de/")
 
