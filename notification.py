@@ -20,3 +20,6 @@ def sendMessage(message):
         "message": message,
       }), { "Content-type": "application/x-www-form-urlencoded" })
     conn.getresponse()
+
+if __name__ == "__main__":
+    sendMessage("Hallo Welt!")
