@@ -48,8 +48,8 @@ while True:
 	
 	driver.refresh()
 	entries = driver.find_elements_by_class_name("tbdata")
-	newnumber = len(entries)
 	if entrynumber != len(entries):
-		handleChange(entries[entrynumber-1])
+		handleChange(entries[entrynumber])
+	entrynumber = len(entries)
 	time.sleep(300)
 		
