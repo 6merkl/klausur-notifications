@@ -1,0 +1,3 @@
+telegram-send,
+requests,
+bs4
