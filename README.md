@@ -3,7 +3,8 @@ Verwendung:
 
 STiNE-Kennung in name.stine <br>
 STiNE-Passwort in passwort.stine  <br>
-Chrome-Driver in PATH  <br>
-Chrome installiert  <br>
-telegram-send (über pip) installiert und konfiguriert <br>
-selenium (über pip) installiert <br>
+pip install -r requirements.txt <br>
+telegram-send --configure ausführen und Token des Bots eingeben, der die Nachrichten verschicken soll <br>
+python stine.py <br>
+<br>
+und abwarten
