@@ -43,6 +43,8 @@ url = "https://www.stine.uni-hamburg.de/scripts/mgrqispi.dll"
 SEND_GRADES = False
 SEND_BESTANDEN = False
 
+# Hab vergessen, was/wie das tut
+# Es tauscht das letzte Komma gegen ein und aus
 def rreplace(s, old, new, occurrence):
     li = s.rsplit(old, occurrence)
     return new.join(li)
@@ -72,37 +74,32 @@ def handleChange(old, new, gradedict):
 
     message += f" {verb} jetzt online!"
     notification.sendMessage(message)
-    print(message)
 
 def main():
     with requests.Session() as s:
         s = requests.Session()
         r = s.post(url, headers=headers, data=payload)
-        print(s.cookies.get_dict())
 
         a,b = parse_session_arguments(r.headers["REFRESH"])
 
         newurl = f"{url}?APPNAME=CampusNet&PRGNAME=EXAMRESULTS&ARGUMENTS=-N{a},-N{b}"
-        print(newurl)
         r = s.get(newurl)
 
         r.encoding = "utf-8"
         courses = modulparser.parse_courses(r.text)
-        with open("b.html", "w") as f:
-            f.write(r.text)
         while True:
-            timenow = time.strftime("%H:%M:%S", time.localtime())
+            # timenow = time.strftime("%H:%M:%S", time.localtime())
             try:
                 r = s.get(newurl, timeout = 60)
             except:
-                notification.sendMessage("STiNE timed out :(")
-            print("reloaded at "+ timenow)
-            print(f"this took {r.elapsed.total_seconds()} seconds")
+                # notification.sendMessage("STiNE timed out :(")
+                pass
+            # print("reloaded at "+ timenow)
+            # print(f"this took {r.elapsed.total_seconds()} seconds")
             r.encoding = "UTF-8"
             new_courses = modulparser.parse_courses(r.text)
             if new_courses != courses:
                 handleChange(courses, new_courses, modulparser.parse_all(r.text))
-                print("something happend")
             time.sleep(180)
             courses = new_courses
 
