@@ -98,10 +98,10 @@ def main():
             # print(f"this took {r.elapsed.total_seconds()} seconds")
             r.encoding = "UTF-8"
             new_courses = modulparser.parse_courses(r.text)
-            if new_courses != courses:
+            if len(new_courses) != 0 and new_courses != courses:
                 handleChange(courses, new_courses, modulparser.parse_all(r.text))
+                courses = new_courses
             time.sleep(180)
-            courses = new_courses
 
 if __name__ == "__main__":
     main()
