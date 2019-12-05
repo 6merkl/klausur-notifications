@@ -24,6 +24,7 @@ def parse_all(response):
     return dict(zip(parse_courses(response), parse_grades(response)))
 
 if __name__ == "__main__":
+    pass
     # with open("testdaten.txt") as f:
     #     text = f.read()
     # print(parse_courses(text))
