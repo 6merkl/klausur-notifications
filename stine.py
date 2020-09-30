@@ -42,6 +42,7 @@ url = "https://www.stine.uni-hamburg.de/scripts/mgrqispi.dll"
 
 SEND_GRADES = False
 SEND_BESTANDEN = False
+PRINT_UPDATES = True
 
 # Hab vergessen, was/wie das tut
 # Es tauscht das letzte Komma gegen ein und aus
@@ -49,6 +50,16 @@ def rreplace(s, old, new, occurrence):
     li = s.rsplit(old, occurrence)
     return new.join(li)
 
+def calculateSleepTime():
+    sleepminutes = 3
+    localtime = time.localtime()
+    hour = localtime.tm_hour
+
+    if hour >= 8:
+        sleeptime = 3
+    if hour == 23 or hour < 8:
+        sleepminutes = 60
+    return 60*sleepminutes
 
 def parse_session_arguments(refval):
     split = refval.split("-N")
@@ -87,21 +98,29 @@ def main():
 
         r.encoding = "utf-8"
         courses = modulparser.parse_courses(r.text)
+        print(courses)
         while True:
-            # timenow = time.strftime("%H:%M:%S", time.localtime())
+            timenow = time.strftime("%H:%M:%S", time.localtime())
             try:
                 r = s.get(newurl, timeout = 60)
             except:
                 # notification.sendMessage("STiNE timed out :(")
+                if PRINT_UPDATES:
+                    print("STiNE timed out")
                 pass
-            # print("reloaded at "+ timenow)
-            # print(f"this took {r.elapsed.total_seconds()} seconds")
+            if PRINT_UPDATES:
+                print("reloaded at "+ timenow)
+                print(f"this took {r.elapsed.total_seconds()} seconds")
             r.encoding = "UTF-8"
             new_courses = modulparser.parse_courses(r.text)
             if len(new_courses) != 0 and new_courses != courses:
                 handleChange(courses, new_courses, modulparser.parse_all(r.text))
                 courses = new_courses
-            time.sleep(180)
+            sleeptime = calculateSleepTime()
+            if PRINT_UPDATES:
+                print(f"Now pausing for {sleeptime} seconds")
+                print()
+            time.sleep(sleeptime)
 
 if __name__ == "__main__":
     main()
