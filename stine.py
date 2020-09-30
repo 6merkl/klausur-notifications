@@ -26,8 +26,8 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 }
 
 payload = {'usrname': name,
-'pass':passwort, 
-"APPNAME": "CampusNet", 
+'pass':passwort,
+"APPNAME": "CampusNet",
 "PRGNAME": "LOGINCHECK",
 "ARGUMENTS": "clino,usrname,pass,menuno,menu_type,browser,platform",
 "clino": "000000000000001",
