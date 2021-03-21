@@ -55,10 +55,8 @@ def calculateSleepTime():
     localtime = time.localtime()
     hour = localtime.tm_hour
 
-    if hour >= 8:
-        sleeptime = 3
     if hour == 23 or hour < 8:
-        sleepminutes = 60
+        sleepminutes = 29
     return 60*sleepminutes
 
 def parse_session_arguments(refval):
@@ -118,6 +116,7 @@ def main():
                 courses = new_courses
             sleeptime = calculateSleepTime()
             if PRINT_UPDATES:
+                print(new_courses)
                 print(f"Now pausing for {sleeptime} seconds")
                 print()
             time.sleep(sleeptime)
